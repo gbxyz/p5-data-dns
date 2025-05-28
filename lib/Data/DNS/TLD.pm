@@ -108,6 +108,9 @@ This method returns one of the following:
 
 =back
 
+This method uses L<ICANN::gTLD> to check if the TLD is present on the list of
+gTLDs published by ICANN.
+
 =head2 rdap_record()
 
 This methods queries the IANA RDAP server and returns a
