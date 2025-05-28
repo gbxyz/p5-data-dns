@@ -35,13 +35,28 @@ sub new {
 sub type {
     my $self = shift;
 
-    if (ICANN::gTLD->get($self->name)) {
-        return TYPE_GTLD;
-
-    } elsif (exists($KNOWN_TYPES->{$self->name})) {
+    if (exists($KNOWN_TYPES->{$self->name})) {
+        #
+        # known type
+        #
         return $KNOWN_TYPES->{$self->name};
 
+    } elsif (2 == length($self->name)) {
+        #
+        # all 2-character TLDs are ccTLDs
+        #
+        return TYPE_CCTLD;
+
+    } elsif (ICANN::gTLD->get($self->name)) {
+        #
+        # TLD is present in the ICANN gTLD list
+        #
+        return TYPE_GTLD;
+
     } else {
+        #
+        # IDN ccTLD
+        #
         return TYPE_CCTLD;
 
     }
